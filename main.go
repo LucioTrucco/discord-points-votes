@@ -3,6 +3,7 @@ package main
 import (
 	"encoding/csv"
 	"encoding/json"
+	"flag"
 	"io/ioutil"
 	"log"
 	"net/http"
@@ -26,20 +27,29 @@ type Leaderboard struct {
 	Leaderboard []UserPoints `json:"leaderboard"`
 }
 
+var (
+	Url    = flag.String("url", "", "Points api url")
+	Cookie = flag.String("cookie", "", "cookie of points api")
+)
+
+func init() {
+	flag.Parse()
+}
+
 func main() {
 
-	url := "https://points.city/api/guilds/961074073868308480/leaderboard"
+	url := Url
 
 	spaceClient := http.Client{
 		Timeout: time.Second * 10, // Timeout after 2 seconds
 	}
 
-	req, err := http.NewRequest(http.MethodGet, url, nil)
+	req, err := http.NewRequest(http.MethodGet, *url, nil)
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	req.Header.Set("Cookie", "pointsID=xlTF88yqTNfUKr-NyD-nZdmImAk1S-7P.KCD3%2BTmVMC67bdOuYWa8SgyfhQ4P9c%2B7X8YtSYB43A0; Path=/; Expires=Sun, 17 Jul 2022 01:16:51 GMT; HttpOnly")
+	req.Header.Set("Cookie", *Cookie)
 
 	res, getErr := spaceClient.Do(req)
 	if getErr != nil {
