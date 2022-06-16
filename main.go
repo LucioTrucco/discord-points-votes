@@ -3,7 +3,6 @@ package main
 import (
 	"encoding/csv"
 	"encoding/json"
-	"fmt"
 	"io/ioutil"
 	"log"
 	"net/http"
@@ -57,15 +56,9 @@ func main() {
 	}
 
 	var leaderboard Leaderboard
-	// fmt.Println(string(jsonData))
 	jsonErr := json.Unmarshal([]byte(jsonData), &leaderboard)
 	if jsonErr != nil {
 		log.Fatal(jsonErr)
-	}
-
-	for _, user := range leaderboard.Leaderboard {
-		fmt.Println("GuildID: ", user)
-
 	}
 
 	file, err := os.Create("points.csv")
