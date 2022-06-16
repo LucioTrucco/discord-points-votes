@@ -22,6 +22,15 @@ type UserPoints struct {
 	Points_phase_1 int    `json:"balance"`
 }
 
+//Voting_phases
+
+// type DBUSER struct {
+// 	DiscordUserID string      `json:"userID"`
+// 	VotingPhases  VotingPhase `json:"voting_phases"`
+// }
+
+type VotingPhase map[string]int8
+
 type Leaderboard struct {
 	Status      string       `json:"status"`
 	Leaderboard []UserPoints `json:"leaderboard"`
@@ -30,6 +39,7 @@ type Leaderboard struct {
 var (
 	Url    = flag.String("url", "", "Points api url")
 	Cookie = flag.String("cookie", "", "cookie of points api")
+	Table  = flag.String("table", "", "Table name")
 )
 
 func init() {
@@ -41,7 +51,7 @@ func main() {
 	url := Url
 
 	spaceClient := http.Client{
-		Timeout: time.Second * 10, // Timeout after 2 seconds
+		Timeout: time.Second * 2, // Timeout after 2 seconds
 	}
 
 	req, err := http.NewRequest(http.MethodGet, *url, nil)
