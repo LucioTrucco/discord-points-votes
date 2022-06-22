@@ -5,9 +5,10 @@
 - Run `go get .`
 - Run `go mod tidy`
 
-## Initial DynamoDBLocal
+## Initial DynamoDBLocal (You need download DynamoDBLocal.jar first)
 ```shell
-docker run -p 8000:8000 amazon/dynamodb-local
+docker run -p 8000:8000 amazon/dynamodb-local \
+  -jar DynamoDBLocal.jar -sharedDb
 ```
 
 ## HOW TO RUN
